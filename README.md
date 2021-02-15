@@ -2,11 +2,12 @@
 
 ## Goal
 
-The goal of this script is to find frames that have differences (defined by the -p argument) to black frames or between 2 videos.
+The goal of this script is to find frames that have differences (defined by the -p argument) to black frames or between 2 videos only if they have the same amount of frames.
 
 - It can be useful for syncing audios or subs because most time desync can happen at these transition.
-- It also helps to define segments in the video that can be used for checking the sync
+- It also helps to define segments in the video that can be used for checking the sync.
 - The intervals are not always right and desync can happen elsewhere because the video is different or for other unknown reasons.
+- With the difference mode it can help to find the frames that are different between 2 videos.
 
 ## Requirements
 
