@@ -53,6 +53,12 @@ parser.add_argument("-p", "--percent",
 # OPTIONAL: -v / --verbose
 parser.add_argument("-v", "--verbose",
                     required=False,
+                    help="Enable debug and progression for the frames in intervals (default: disabled)",
+                    action='store_true')
+
+# OPTIONAL: -vv / --veryverbose
+parser.add_argument("-vv", "--veryverbose",
+                    required=False,
                     help="Enable debug and progression while scanning each frames (default: disabled)",
                     action='store_true')
 
@@ -90,16 +96,20 @@ fps = diff.fps.numerator / diff.fps.denominator
 
 print("INFO: Start the comparison of each frames")
 for i in range(0, diff.num_frames):
-  if args.verbose:
+  if args.veryverbose:
     print('{} / {} [PlaneStatsDiff: {}]'.format(i, diff.num_frames, diff.get_frame(i).props['PlaneStatsDiff']))
   else:
-    if i % 1000 == 0:
+    if i % 1000 == 0 and not args.verbose:
       print("PROGRESS: Compare {} on {}".format(i, diff.num_frames))
   if args.diff:
     if diff.get_frame(i).props['PlaneStatsDiff'] != 0.0:
+      if args.verbose:
+        print('{} / {} [PlaneStatsDiff: {}]'.format(i, diff.num_frames, diff.get_frame(i).props['PlaneStatsDiff']))
       sceneFrames.append(i)
   else:
     if diff.get_frame(i).props['PlaneStatsDiff'] < float(args.percent):
+      if args.verbose:
+        print('{} / {} [PlaneStatsDiff: {}]'.format(i, diff.num_frames, diff.get_frame(i).props['PlaneStatsDiff']))
       sceneFrames.append(i)
 print("")
 
