@@ -31,7 +31,8 @@ optional arguments:
                         Percent of difference between video and another
                         frames, 0 minimum and 1 maximum (default 0.1), if we
                         compare to another video we display the frames that
-                        are different of 0 instead of lower to the percent
+                        are different of 0 instead of lower to the percent by
+                        default
   -v, --verbose         Enable debug and progression for the frames in
                         intervals (default: disabled)
   -vv, --veryverbose    Enable debug and progression while scanning each
