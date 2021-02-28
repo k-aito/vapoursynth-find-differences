@@ -48,7 +48,7 @@ parser.add_argument("-d", "--diff",
 parser.add_argument("-p", "--percent",
                     required=False,
                     help="Percent of difference between video and another frames, 0 minimum and 1 maximum (default 0.1), "
-                         + "if we compare to another video we display the frames that are different of 0 instead of lower to the percent")
+                         + "if we compare to another video we display the frames that are different of 0 instead of lower to the percent by default")
 
 # OPTIONAL: -v / --verbose
 parser.add_argument("-v", "--verbose",
@@ -102,10 +102,16 @@ for i in range(0, diff.num_frames):
     if i % 1000 == 0 and not args.verbose:
       print("PROGRESS: Compare {} on {}".format(i, diff.num_frames))
   if args.diff:
-    if diff.get_frame(i).props['PlaneStatsDiff'] != 0.0:
-      if args.verbose:
-        print('{} / {} [PlaneStatsDiff: {}]'.format(i, diff.num_frames, diff.get_frame(i).props['PlaneStatsDiff']))
-      sceneFrames.append(i)
+    if args.percent:
+      if diff.get_frame(i).props['PlaneStatsDiff'] > float(args.percent):
+        if args.verbose:
+          print('{} / {} [PlaneStatsDiff: {}]'.format(i, diff.num_frames, diff.get_frame(i).props['PlaneStatsDiff']))
+        sceneFrames.append(i)
+    else:
+      if diff.get_frame(i).props['PlaneStatsDiff'] != 0.0:
+        if args.verbose:
+          print('{} / {} [PlaneStatsDiff: {}]'.format(i, diff.num_frames, diff.get_frame(i).props['PlaneStatsDiff']))
+        sceneFrames.append(i)
   else:
     if diff.get_frame(i).props['PlaneStatsDiff'] < float(args.percent):
       if args.verbose:
